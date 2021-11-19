@@ -3,14 +3,19 @@ package com.epr;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Enumeration;
+
 
 public class DBConnection {
 
-	static String url = "jdbc:mysql://localhost:3306/payroll_service?useSSL=false";
-	static String uname = "root";
-	static String pwd = "Shubham@2595";
+	private static String url = "jdbc:mysql://localhost:3306/payroll_service?useSSL=false";
+	private static String uname = "root";
+	private static String pwd = "Shubham@2595";
+
+	Connection connection;
 
 	// constructor
 	public DBConnection() {
@@ -27,10 +32,17 @@ public class DBConnection {
 			e.printStackTrace();
 		}
 
-		Connection connection;
 		try {
 			connection = DriverManager.getConnection(url, uname, pwd);
 			System.out.println("Connection to the DB successfull..! " + connection);
+			Statement stat = connection.createStatement();
+			ResultSet rs = stat.executeQuery("SELECT * FROM employee_payroll");
+			System.out.println("ID  |   Name \n----------------------");
+			while(rs.next()) {
+				Integer id = rs.getInt("id");
+				String name = rs.getString("name");
+				System.out.println(id  + "   |   " + name);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -46,4 +58,6 @@ public class DBConnection {
 		}
 
 	}
+
+
 }
