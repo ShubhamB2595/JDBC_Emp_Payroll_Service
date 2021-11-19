@@ -8,31 +8,42 @@ import java.util.Enumeration;
 
 public class DBConnection {
 
-	public static void main(String[] args) {
-		
-		String url = "jdbc:mysql://localhost:3306/payroll_service?useSSL=false";
-		String uname = "root";
-		String pwd = "Shubham@2595";
-		
+	static String url = "jdbc:mysql://localhost:3306/payroll_service?useSSL=false";
+	static String uname = "root";
+	static String pwd = "Shubham@2595";
+
+	// constructor
+	public DBConnection() {
+
+	}
+
+	// method to check database connection
+	public void makeConnection() {
+
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			System.out.println("Driver id loaded");
-		} catch(ClassNotFoundException e) {
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-		}
-		
-		Enumeration<Driver> drivers = DriverManager.getDrivers();
-		while(drivers.hasMoreElements()) {
-			Driver driver = drivers.nextElement();
-			System.out.println("Driver Name: " + driver);
 		}
 
 		Connection connection;
 		try {
 			connection = DriverManager.getConnection(url, uname, pwd);
 			System.out.println("Connection to the DB successfull..! " + connection);
-		} catch(SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	// method to checking the driver is loaded or not
+	public void checkDriver() {
+
+		Enumeration<Driver> drivers = DriverManager.getDrivers();
+		while (drivers.hasMoreElements()) {
+			Driver driver = drivers.nextElement();
+			System.out.println("Driver Name: " + driver);
+		}
+
 	}
 }
