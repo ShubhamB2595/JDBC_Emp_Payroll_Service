@@ -1,6 +1,7 @@
 package com.services;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -62,7 +63,7 @@ public class EmployeePayrollDBService {
 	}
 
 	// method to update the table data using the prepared statement
-	private int updateEmployeeDataUsingStatement(String name, double salary) {
+	int updateEmployeeDataUsingStatement(String name, double salary) {
 
 		String sql = String.format("UPDATE employee_payroll SET basic_pay = %.2f WHERE name = '%s';", salary, name);
 
@@ -138,5 +139,14 @@ public class EmployeePayrollDBService {
 		String sql = "SELECT * FROM employee_payroll";
 
 		return getEmployeePayrollDataDB(sql);
+	}
+
+	// method for the getting data in date range
+	public List<EmployeePayrollData> getEmployeeForDateRange(LocalDate startDate, LocalDate endDate) {
+
+		String sql = String.format("SELECT * FROM employee_payroll WHERE START BETWEEN '%s' AND '%s';",
+				Date.valueOf(startDate), Date.valueOf(endDate));
+
+		return getEmployeePayrollData(sql);
 	}
 }

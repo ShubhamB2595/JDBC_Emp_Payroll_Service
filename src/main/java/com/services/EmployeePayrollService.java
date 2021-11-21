@@ -1,5 +1,6 @@
 package com.services;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.exception.CustomException;
@@ -52,5 +53,32 @@ public class EmployeePayrollService {
 
 		List<EmployeePayrollData> employeePayrollDataList = employeePayrollDBService.getEmployeePayrollData(name);
 		return employeePayrollDataList.get(0).equals(getEmployeePayrollData(name));
+	}
+
+	// Method for the read data in date range
+	public List<EmployeePayrollData> readEmployeePayrollForDateRange(IOService ioService, LocalDate startDate,
+			LocalDate endDate) {
+
+		if (ioService.equals(IOService.DB_IO)) {
+
+			return employeePayrollDBService.getEmployeeForDateRange(startDate, endDate);
+		}
+		return null;
+	}
+
+	// update table data using prepared statement  
+	public void updateEmployeeSalaryUsingPreparedStatement(String name, double salary) {
+
+		int result = employeePayrollDBService.updateEmployeeDataUsingStatement(name, salary);
+
+		if (result == 0) {
+			return;
+		}
+
+		EmployeePayrollData employeePayrollData = this.getEmployeePayrollData(name);
+
+		if (employeePayrollData != null) {
+			employeePayrollData.salary = salary;
+		}
 	}
 }
