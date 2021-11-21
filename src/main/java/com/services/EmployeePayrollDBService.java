@@ -61,14 +61,6 @@ public class EmployeePayrollDBService {
 		return employeePayrollList;
 	}
 
-	// method to read the data from table
-	public List<EmployeePayrollData> readData() throws CustomException {
-
-		String sql = "SELECT * FROM employee_payroll";
-
-		return getEmployeePayrollDataDB(sql);
-	}
-
 	// method to update the table data using the prepared statement
 	private int updateEmployeeDataUsingStatement(String name, double salary) {
 
@@ -138,5 +130,13 @@ public class EmployeePayrollDBService {
 	public int updateEmployeeData(String name, double salary) {
 
 		return this.updateEmployeeDataUsingStatement(name, salary);
+	}
+
+	// method to read the data from table
+	public List<EmployeePayrollData> readData() throws CustomException {
+
+		String sql = "SELECT * FROM employee_payroll";
+
+		return getEmployeePayrollDataDB(sql);
 	}
 }
